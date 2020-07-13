@@ -79,8 +79,9 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
         recipeAdapter = new RecipeAdapter(this, recipes, new OnRecyclerClickListener() {
             @Override
             public void onRecyclerViewItemClicked(int position, int id) {
-//                Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
+                intent.putExtra("selected_item", recipes.get(position));
+                startActivity(intent);
             }
         });
 

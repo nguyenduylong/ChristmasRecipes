@@ -1,6 +1,8 @@
 package com.duylong.christmasrecipes.model;
 
-public class Recipe {
+import java.io.Serializable;
+
+public class Recipe implements Serializable {
     private String name;
     private String imageUrl;
     private String skillLevel;
