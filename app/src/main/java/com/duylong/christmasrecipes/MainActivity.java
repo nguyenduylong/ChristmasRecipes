@@ -2,6 +2,7 @@ package com.duylong.christmasrecipes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,10 +10,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Filter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
@@ -43,20 +46,33 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
 
     private ArrayMap<String, List<String>> appliedFilters = new ArrayMap<>();
 
+    TextView noresultTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        noresultTextView = findViewById(R.id.no_result_txt);
+
         recipes = new ArrayList<Recipe>();
 
         dbManager = new DBManager(this);
         dbManager.open();
+
+//        dbManager.updateDataBase();
+
         Cursor dataCursor = dbManager.fetch_data();
-        do {
-            Recipe recipe = createRecipe(dataCursor);
-            recipes.add(recipe);
-        } while (dataCursor.moveToNext());
+
+        recipes = createRecipeList(dataCursor);
+
+        if (recipes.size() > 0) {
+            noresultTextView.setVisibility(View.INVISIBLE);
+        } else {
+            noresultTextView.setVisibility(View.VISIBLE);
+        }
+
+        Toast.makeText(getApplicationContext(), recipes.size() + "", Toast.LENGTH_SHORT).show();
 
         recipeListView = findViewById(R.id.recipe_view);
 
@@ -73,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
 
         recipeListView.setLayoutManager(layoutManager);
+        recipeListView.setItemAnimator(new DefaultItemAnimator());
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -86,6 +103,18 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
             }
         });
 
+    }
+
+    private ArrayList<Recipe> createRecipeList(Cursor dataCursor) {
+        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+        if (dataCursor.getCount() > 0) {
+            do {
+                Recipe recipe = createRecipe(dataCursor);
+                recipeList.add(recipe);
+            } while (dataCursor.moveToNext());
+        }
+
+        return recipeList;
     }
 
     private Recipe createRecipe(Cursor cursor) {
@@ -141,14 +170,126 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
 
         } else {
             if (result != null) {
+                String[] whereClauses;
                 appliedFilters = (ArrayMap<String, List<String>>) result;
                 if (appliedFilters.size() > 0) {
+                    int i = 0;
+                    whereClauses = new String[appliedFilters.size()];
                     for (Map.Entry<String, List<String>> entry: appliedFilters.entrySet()) {
-                        Log.i("key", entry.getKey());
-                        Log.i("selectedValue", entry.getValue().toString());
+                        String key = entry.getKey();
+                        List<String> values = entry.getValue();
+                        Log.i("selected key", key);
+                        String whereClause = "";
+                        switch (key) {
+                            case "skill level":
+                                whereClause = generateSkillLevelCondition(values);
+                                break;
+                            case "kind":
+                                whereClause = generateKindCondition(values);
+                                break;
+                            case "calories":
+                                whereClause = generateKcalCondition(values);
+                                break;
+                            case "ingredients":
+                                whereClause = generateIngredientCondition(values);
+                                break;
+                        }
+                        if (!whereClause.equals("")) {
+                            whereClauses[i] = whereClause;
+                            i++;
+                        }
                     }
+                    TransitionManager.beginDelayedTransition(recipeListView);
+                    Cursor dataCursor = dbManager.fetch_data(whereClauses);
+                    recipes.clear();
+                    if (dataCursor.getCount() > 0) {
+                        do {
+                            Recipe recipe = createRecipe(dataCursor);
+                            recipes.add(recipe);
+                        } while (dataCursor.moveToNext());
+                    }
+                    if (recipes.size() > 0) {
+                        noresultTextView.setVisibility(View.INVISIBLE);
+                    } else {
+                        noresultTextView.setVisibility(View.VISIBLE);
+                    }
+                    Log.i("result count", recipes.size() + "");
+                    recipeAdapter.notifyDataSetChanged();
                 }
             }
         }
+    }
+
+    private String generateIngredientCondition(List<String> values) {
+        String whereClause = "";
+        if (values.size() > 0) {
+            String firstValue = values.get(0);
+            whereClause = "ingredients like '%" + firstValue + "%'";
+            for (int i = 1; i < values.size(); i++) {
+                whereClause = whereClause + " AND ingredients like '%" + values.get(i) + "%'";
+            }
+            whereClause = "(" + whereClause + ")";
+        }
+        Log.i("ingredients condition", whereClause);
+
+        return whereClause;
+    }
+
+    private String generateKcalCondition(List<String> values) {
+        String whereClause = "";
+        if (values.size() > 0) {
+            String firstValue = values.get(0);
+            whereClause = generateKcalConditionByLevel(firstValue);
+            for (int i = 1; i < values.size(); i++) {
+                whereClause = whereClause + "OR" + generateKcalConditionByLevel(values.get(i));
+            }
+            whereClause = "(" + whereClause + ")";
+        }
+        Log.i("calories condition", whereClause);
+
+        return whereClause;
+    }
+
+    private String generateKcalConditionByLevel(String level) {
+        String whereClause = "(kcals >= 500) ";
+        if (level.equals("Medium")) {
+            whereClause = " (kcals < 500 AND kcals >= 250)";
+        }
+        if (level.equals("Low")) {
+            whereClause = " (kcals < 250)";
+        }
+        return whereClause;
+    }
+
+    private String generateKindCondition(List<String> values) {
+        String whereClause = "";
+        if (values.size() > 0) {
+            String firstValue = values.get(0);
+            whereClause = "name LIKE '%" + firstValue + "%'";
+
+            for (int i = 1; i < values.size(); i++) {
+                whereClause = whereClause + " OR name LIKE '%" + values.get(i) + "%'";
+            }
+            whereClause = "(" + whereClause + ")";
+        }
+        Log.i("kind where clause", whereClause);
+
+        return whereClause;
+    }
+
+    private String generateSkillLevelCondition(List<String> values) {
+        String whereClause = "";
+        if (values.size() > 0) {
+            String firstValue = values.get(0);
+            whereClause = "skill_level LIKE '%" + firstValue + "%'";
+
+            for (int i = 1; i < values.size(); i++) {
+                whereClause = whereClause + " OR skill_level LIKE '%" + values.get(i) + "%'";
+            }
+            whereClause = "(" + whereClause + ")";
+        }
+        Log.i("skill level clause", whereClause);
+
+        return whereClause;
     }
 }

@@ -72,4 +72,18 @@
         app:backgroundTint="@color/filtersfab"
         app:elevation="0dp" />
 
+    <TextView
+        android:id="@+id/no_result_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:fontFamily="@font/cybertoothbold"
+        android:visibility="invisible"
+        android:textSize="20sp"/>
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

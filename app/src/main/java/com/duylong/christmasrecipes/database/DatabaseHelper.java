@@ -70,4 +70,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
     }
+
+    public void updateDataBase() {
+        File dbFile = new File(DB_PATH + DB_NAME);
+        if (dbFile.exists()) {
+            dbFile.delete();
+        }
+        copyDataBase();
+    }
 }

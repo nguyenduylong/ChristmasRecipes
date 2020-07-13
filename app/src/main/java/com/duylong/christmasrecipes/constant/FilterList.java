@@ -4,10 +4,12 @@ import com.duylong.christmasrecipes.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FilterList {
 
-    public static ArrayList<String> SKILLS = new ArrayList<String>(Arrays.asList("A Challenge", "More Effort", "Easy"));
+    public static ArrayList<String> SKILLS = new ArrayList<String>(Arrays.asList("A challenge", "More effort", "Easy"));
 
     public static int[] SKILL_DRAWABLES = new int[] {R.drawable.challenge, R.drawable.moreeffort, R.drawable.easy};
 

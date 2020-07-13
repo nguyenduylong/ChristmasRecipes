@@ -120,10 +120,10 @@ public class FilterFragment extends AAH_FabulousFragment {
                     inflateLayoutWithFilters("kind", flexboxLayout);
                     break;
                 case 1:
-                    inflateLayoutWithFilters("skill level", flexboxLayout);
+                    inflateLayoutWithFilters("calories", flexboxLayout);
                     break;
                 case 2:
-                    inflateLayoutWithFilters("calories", flexboxLayout);
+                    inflateLayoutWithFilters("skill level", flexboxLayout);
                     break;
                 case 3:
                     inflateLayoutWithFilters("ingredients", flexboxLayout);
