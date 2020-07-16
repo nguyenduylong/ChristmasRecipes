@@ -1,18 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.NutritionFragment"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/nutrition_info"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/gumboots"
-        android:textSize="16sp"
-        android:text="Nutrition info" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/calories"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Calories :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_calories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/fat"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Fat :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_fat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/saturate"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Saturates :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_saturates"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/carb"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Carb :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_carb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/sugar"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Sugar :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_sugar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 g"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/fibre"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Fibre :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_fibre"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/protein"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Protein :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_protein"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginTop="5dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/salt"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Salt :"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/nutritrion_salt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="100 Kcal"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/gumboots"
+            android:textColor="@color/black_20"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>

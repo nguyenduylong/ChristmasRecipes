@@ -173,6 +173,8 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
             if (result != null) {
                 String[] whereClauses;
                 appliedFilters = (ArrayMap<String, List<String>>) result;
+                Cursor dataCursor = null;
+
                 if (appliedFilters.size() > 0) {
                     int i = 0;
                     whereClauses = new String[appliedFilters.size()];
@@ -201,7 +203,23 @@ public class MainActivity extends AppCompatActivity implements AAH_FabulousFragm
                         }
                     }
                     TransitionManager.beginDelayedTransition(recipeListView);
-                    Cursor dataCursor = dbManager.fetch_data(whereClauses);
+                    dataCursor = dbManager.fetch_data(whereClauses);
+                    recipes.clear();
+                    if (dataCursor.getCount() > 0) {
+                        do {
+                            Recipe recipe = createRecipe(dataCursor);
+                            recipes.add(recipe);
+                        } while (dataCursor.moveToNext());
+                    }
+                    if (recipes.size() > 0) {
+                        noresultTextView.setVisibility(View.INVISIBLE);
+                    } else {
+                        noresultTextView.setVisibility(View.VISIBLE);
+                    }
+                    Log.i("result count", recipes.size() + "");
+                    recipeAdapter.notifyDataSetChanged();
+                } else {
+                    dataCursor = dbManager.fetch_data();
                     recipes.clear();
                     if (dataCursor.getCount() > 0) {
                         do {
