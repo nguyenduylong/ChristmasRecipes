@@ -4,7 +4,7 @@ I created this application for practicing Android Recycleview, Fragment and Data
 
 ## Ideal : 
 You can search some recipes for Christmas party. And if you like any recpie, you can explore some information about recpies (nutrtion fact, ingredients and cooking steps)
-I created <a href="https://github.com/nguyenduylong/ChristmasRecipeDataManipulating"> Data manipulating project</a> for crawling data from <a href="https://www.bbcgoodfood.com/">BBC GoodFood</a> and saved into sqlite database for this application
+I crawled data saved into sqlite database for this application
 ## Using Libraries:
 Some libraries which I used in this application:
 
